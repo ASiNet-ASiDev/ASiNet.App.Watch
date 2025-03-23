@@ -1,0 +1,10 @@
+﻿<Application x:Class="ASiNet.App.Watch.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ASiNet.App.Watch"
+             
+             StartupUri="view/WatchWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

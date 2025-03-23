@@ -1,0 +1,38 @@
+﻿<bs:BaseSegment x:Class="ASiNet.App.Watch.View.Separators.ClassicSeparator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:bs="clr-namespace:ASiNet.App.Watch.View"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ASiNet.App.Watch.View.Separators"
+             xmlns:vm="clr-namespace:ASiNet.App.Watch.ViewModel"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:SegmentVM}">
+    <Viewbox Stretch="Uniform" StretchDirection="Both">
+        <Path x:Name="Segment" Width="20" Height="250" Fill="White" Stretch="None">
+            <Path.Data>
+                <GeometryGroup>
+                    <PathGeometry>
+                        <PathFigure IsClosed="True" StartPoint="10,20">
+                            <LineSegment Point="20,30"/>
+                            <LineSegment Point="20,60"/>
+                            <LineSegment Point="20,60"/>
+                            <LineSegment Point="10,70"/>
+                            <LineSegment Point="0,60"/>
+                            <LineSegment Point="0,30"/>
+                        </PathFigure>
+                    </PathGeometry>
+                    <PathGeometry>
+                        <PathFigure IsClosed="True" StartPoint="10,180">
+                            <LineSegment Point="20,190"/>
+                            <LineSegment Point="20,220"/>
+                            <LineSegment Point="20,220"/>
+                            <LineSegment Point="10,230"/>
+                            <LineSegment Point="0,220"/>
+                            <LineSegment Point="0,190"/>
+                        </PathFigure>
+                    </PathGeometry>
+                </GeometryGroup>
+            </Path.Data>
+        </Path>
+    </Viewbox>
+</bs:BaseSegment>

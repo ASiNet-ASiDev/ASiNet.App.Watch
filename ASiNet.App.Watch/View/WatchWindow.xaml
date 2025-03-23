@@ -1,0 +1,60 @@
+﻿<Window x:Class="ASiNet.App.Watch.View.WatchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ASiNet.App.Watch.View"
+        xmlns:clock="clr-namespace:ASiNet.App.Watch.View.Clocks"
+        xmlns:vm="clr-namespace:ASiNet.App.Watch.ViewModel"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Height="450" Width="800"
+        Background="Transparent" MouseMove="Window_MouseMove" 
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        MouseLeftButtonUp="Window_MouseLeftButtonUp"
+        Loaded="Window_Loaded">
+    <Window.DataContext>
+        <vm:WatchWindowVM/>
+    </Window.DataContext>
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem DataContext="{Binding WindowContextMenu}" Header="Window settings">
+                <MenuItem Header="{Binding PinnedItemHeader}" Command="{Binding ChangeIsPinnedCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Clock style"> 
+                
+            </MenuItem>
+            <MenuItem Name="CloseBtn" Header="Close" Click="CloseBtn_Click"/>
+        </ContextMenu>
+    </Window.ContextMenu>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <clock:ClassicClock 
+            DataContext="{Binding Clock}" 
+            AllowInteractive="{Binding Interactive}"
+            InteractResult="{Binding InteractiveResult, Mode=TwoWay}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Clock" Command="{Binding StartClockCommand}" Grid.Column="0"/>
+            <Button Content="Timer" Command="{Binding StartTimerCommand}" Grid.Column="1"/>
+            <Button Content="StopWatch" Command="{Binding StartStopWatchCommand}" Grid.Column="2"/>
+        </Grid>
+    </Grid>
+</Window>
