@@ -8,11 +8,10 @@
              xmlns:s="clr-namespace:ASiNet.App.Watch.View.Separators"
              xmlns:n="clr-namespace:ASiNet.App.Watch.View.Numbers"
              xmlns:local="clr-namespace:ASiNet.App.Watch.View.Clocks"
-             d:DataContext="{d:DesignInstance vm:ClockVM}"
+             d:DataContext="{d:DesignInstance vm:ClockBaseVM}"
              mc:Ignorable="d">
     <UserControl.Resources>
         <cnv:BooleanToVisConverter x:Key="btv"/>
-        <cnv:ClockModeToVisConverter x:Key="cmv"/>
     </UserControl.Resources>
     <Grid ClipToBounds="False">
         <Grid.ColumnDefinitions>
@@ -116,26 +115,15 @@
                          MouseLeave="LastSecondInteractBox_MouseLeave"
                          MouseWheel="LastSecond_MouseWheel"/>
 
-        <Border x:Name="TimerOptions" Grid.ColumnSpan="7" Grid.Row="2" Visibility="{Binding Mode, ConverterParameter=timer, Converter={StaticResource cmv}}">
+        <Border x:Name="StopWatchOptions" Grid.ColumnSpan="7" Grid.Row="2" Visibility="{Binding ShowOptions, Converter={StaticResource btv}}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="Start/Stop" Grid.Column="1" Command="{Binding StartStopTimerCommand}"/>
-                <Button Content="Reset" Grid.Column="2" Command="{Binding RestTimerCommand}"/>
-            </Grid>
-        </Border>
-        <Border x:Name="StopWatchOptions" Grid.ColumnSpan="7" Grid.Row="2" Visibility="{Binding Mode, ConverterParameter=stopwatch, Converter={StaticResource cmv}}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button Content="Start/Stop" Grid.Column="1" Command="{Binding StartStopStopWatchCommand}"/>
-                <Button Content="Reset" Grid.Column="2" Command="{Binding RestStopWatchCommand}"/>
+                <Button Content="Start/Stop" Grid.Column="1" Command="{Binding StartStopCommand}"/>
+                <Button Content="Reset" Grid.Column="2" Command="{Binding ResetCommand}"/>
             </Grid>
         </Border>
     </Grid>

@@ -31,7 +31,9 @@ public partial class WatchWindow : Window
     private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
         _isMoved = false;
+#if !DEBUG
         Win32Helper.SendWpfWindowBack(this);
+#endif
     }
 
     private void CloseBtn_Click(object sender, RoutedEventArgs e)
@@ -42,8 +44,10 @@ public partial class WatchWindow : Window
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
+#if DEBUG
         Win32Helper.SendWpfWindowAsToolWindow(this);
         Win32Helper.SendWpfWindowBack(this);
+#endif
         ((WatchWindowVM?)DataContext)?.InitCommand?.Execute(null);
     }
 }
