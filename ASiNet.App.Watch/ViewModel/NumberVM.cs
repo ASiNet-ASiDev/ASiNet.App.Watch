@@ -5,16 +5,20 @@ using CommunityToolkit.Mvvm.ComponentModel;
 namespace ASiNet.App.Watch.ViewModel;
 public partial class NumberVM : ObservableObject
 {
-    public NumberVM()
+    public NumberVM(ParametersVM parameters)
     {
-        SelectedColor = new SolidColorBrush(Colors.Red);
-        InactiveColor = new SolidColorBrush(Color.FromArgb(0,0,0,0));
-        ActiveColor = new SolidColorBrush(Colors.White);
+        SelectedColor = parameters.SelectedSegmentColor;
+        InactiveColor = parameters.InactiveSegmentColor;
+        ActiveColor = parameters.ActiveSegmentColor;
     }
 
 
     [ObservableProperty]
     public partial int Number { get; set; } = -1;
+
+    [ObservableProperty]
+    public partial bool Active { get; set; } = true;
+
 
     [ObservableProperty]
     public partial int AnimationNumber { get; set; }
@@ -32,6 +36,11 @@ public partial class NumberVM : ObservableObject
     public void UpdateNumber(int number)
     {
         Dispatcher.CurrentDispatcher.Invoke(() => Number = number);
+    }
+
+    public void SwitchActive(int _)
+    {
+        Dispatcher.CurrentDispatcher.Invoke(() => Active =! Active);
     }
 
 }

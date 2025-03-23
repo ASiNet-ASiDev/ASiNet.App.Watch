@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ASiNet.App.Watch.View"
         xmlns:clock="clr-namespace:ASiNet.App.Watch.View.Clocks"
+        xmlns:cnv="clr-namespace:ASiNet.App.Watch.Converters"
         xmlns:vm="clr-namespace:ASiNet.App.Watch.ViewModel"
         mc:Ignorable="d"
         WindowStyle="None"
@@ -20,13 +21,16 @@
     <Window.DataContext>
         <vm:WatchWindowVM/>
     </Window.DataContext>
+    <Window.Resources>
+        <cnv:BooleanToVisConverter x:Key="btv"/>
+    </Window.Resources>
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem DataContext="{Binding WindowContextMenu}" Header="Window settings">
                 <MenuItem Header="{Binding PinnedItemHeader}" Command="{Binding ChangeIsPinnedCommand}"/>
             </MenuItem>
-            <MenuItem Header="Clock style"> 
-                
+            <MenuItem DataContext="{Binding Parameters}" Header="Clock style">
+                <MenuItem Header="Show/Hide more options" Command="{Binding ShowHideMoreOptionsCommand}"/>
             </MenuItem>
             <MenuItem Name="CloseBtn" Header="Close" Click="CloseBtn_Click"/>
         </ContextMenu>
@@ -46,7 +50,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"/>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Visibility="{Binding Parameters.HideMoreOptions, Converter={StaticResource btv}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

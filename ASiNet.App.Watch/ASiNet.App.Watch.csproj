@@ -7,6 +7,21 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
 	  <LangVersion>preview</LangVersion>
+	  <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+	  <AssemblyName>Watch Widget</AssemblyName>
+	  <PlatformTarget>AnyCPU</PlatformTarget>
+	  <Authors>ASiNet, ASiDev</Authors>
+	  <Description>Watch widget for windows</Description>
+	  <Copyright>MIT</Copyright>
+	  <Version>0.1.0</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
   </PropertyGroup>
 
   <ItemGroup>

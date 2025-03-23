@@ -13,18 +13,18 @@ namespace ASiNet.App.Watch.ViewModel;
 public partial class ClockVM : ObservableObject
 {
 
-    public ClockVM(WatchUpdater watchUpdater, TimerUpdater timerUpdater, StopWatchUpdater stopWatchUpdater, ClockMode defaultMode = ClockMode.Disable)
+    public ClockVM(WatchUpdater watchUpdater, TimerUpdater timerUpdater, StopWatchUpdater stopWatchUpdater, ParametersVM parameters, ClockMode defaultMode = ClockMode.Disable)
     {
         _watchUpdater = watchUpdater;
         _timerUpdater = timerUpdater;
         _stopWatchUpdater = stopWatchUpdater;
-        SecondFirst = new();
-        SecondLast = new();
-        MinuteFirst = new();
-        MinuteLast = new();
-        HourFirst = new();
-        HourLast = new();
-        HourMinuteSplitter = new();
+        SecondFirst = new(parameters);
+        SecondLast = new(parameters);
+        MinuteFirst = new(parameters);
+        MinuteLast = new(parameters);
+        HourFirst = new(parameters);
+        HourLast = new(parameters);
+        HourMinuteSplitter = new(parameters);
 
         InteractiveResult = TimeSpan.FromSeconds(1);
 
@@ -62,7 +62,7 @@ public partial class ClockVM : ObservableObject
     public partial NumberVM HourLast { get; set; }
 
     [ObservableProperty]
-    public partial SegmentVM HourMinuteSplitter { get; set; }
+    public partial NumberVM HourMinuteSplitter { get; set; }
 
     private WatchUpdater _watchUpdater;
     private TimerUpdater _timerUpdater;
@@ -138,7 +138,7 @@ public partial class ClockVM : ObservableObject
     {
         if (IsRunning)
             return;
-        _timerUpdater.CurrentTime = InteractiveResult;
+        _stopWatchUpdater.CurrentTime = TimeSpan.Zero;
         ResetAllIndicatorsToLastStopWatchValue();
     }
 

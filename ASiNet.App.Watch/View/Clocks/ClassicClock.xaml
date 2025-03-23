@@ -85,6 +85,7 @@
                             Margin="0,5" 
                             DataContext="{Binding HourMinuteSplitter}" ActiveSegment="{Binding Active}"
                             ActiveColor="{Binding ActiveColor}" InactiveColor="{Binding InactiveColor}"
+                            SelectedColor="{Binding SelectedColor}"
                             IsHitTestVisible="False"/>
         <n:ClassicNumber x:Name="FirstMinute" 
                          Grid.Column="3" Grid.RowSpan="2" 

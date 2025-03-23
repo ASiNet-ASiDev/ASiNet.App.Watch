@@ -11,7 +11,6 @@ public partial class WatchWindow : Window
     }
 
     private bool _isMoved;
-
     protected override void OnActivated(EventArgs e)
     {
         base.OnActivated(e);

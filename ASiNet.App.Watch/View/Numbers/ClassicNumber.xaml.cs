@@ -8,13 +8,7 @@ public partial class ClassicNumber : Viewbox
     public ClassicNumber()
     {
         InitializeComponent();
-        SegmentTopMiddle.ActiveSegment = true;
-        SegmentTopRight.ActiveSegment = true;
-        SegmentButtonRight.ActiveSegment = true;
-        SegmentButtonMiddle.ActiveSegment = true;
-        SegmentButtonLeft.ActiveSegment = true;
-        SegmentTopLeft.ActiveSegment = true;
-        SegmentMiddleMiddle.ActiveSegment = true;
+        SetNumberActive(0);
     }
 
 
@@ -59,6 +53,10 @@ public partial class ClassicNumber : Viewbox
         else if (e.Property.Name == nameof(IsSelected))
         {
             SetNumberSelected(IsSelected);
+        }
+        else if(e.Property.Name == nameof(DataContext))
+        {
+            SetNumberActive(Number + 1);
         }
         base.OnPropertyChanged(e);
     }

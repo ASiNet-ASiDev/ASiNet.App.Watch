@@ -7,15 +7,19 @@ public partial class WatchWindowVM : ObservableObject
 {
     public WatchWindowVM()
     {
+        Parameters = new();
         _watchUpdater = new();
         _timerUpdater = new();
         _stopWatchUpdater = new();
         WindowContextMenu = new();
-        Clock = new(_watchUpdater, _timerUpdater, _stopWatchUpdater);
+        Clock = new(_watchUpdater, _timerUpdater, _stopWatchUpdater, Parameters);
     }
 
     [ObservableProperty]
     public partial ClockVM Clock { get; set; }
+
+    [ObservableProperty]
+    public partial ParametersVM Parameters { get; set; }
 
     [ObservableProperty]
     public partial WindowContextMenuVM WindowContextMenu { get; set; }
