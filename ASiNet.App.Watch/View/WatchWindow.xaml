@@ -33,6 +33,10 @@
                 <MenuItem Header="Show/Hide more options" Command="{Binding ShowHideMoreOptionsCommand}"/>
                 <MenuItem Header="Change numbers spacing" Command="{Binding OpenClockSpacingOptionsCommand}"/>
             </MenuItem>
+            <MenuItem DataContext="{Binding Parameters}" Header="Config">
+                <MenuItem Header="Save" Command="{Binding SaveConfigCommand}"/>
+                <MenuItem Header="Load" Command="{Binding LoadConfigCommand}"/>
+            </MenuItem>
             <MenuItem Name="CloseBtn" Header="Close" Click="CloseBtn_Click"/>
         </ContextMenu>
     </Window.ContextMenu>

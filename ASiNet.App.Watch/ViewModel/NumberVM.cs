@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.ComponentModel;
+using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -7,11 +8,15 @@ public partial class NumberVM : ObservableObject
 {
     public NumberVM(ParametersVM parameters)
     {
+        Parameters = parameters;
+        Parameters.PropertyChanged += OnParametersChanged;
         SelectedColor = parameters.SelectedSegmentColor;
         InactiveColor = parameters.InactiveSegmentColor;
         ActiveColor = parameters.ActiveSegmentColor;
     }
 
+    [ObservableProperty]
+    public partial ParametersVM Parameters { get; set; }
 
     [ObservableProperty]
     public partial int Number { get; set; } = -1;
@@ -43,4 +48,15 @@ public partial class NumberVM : ObservableObject
         Dispatcher.CurrentDispatcher.Invoke(() => Active =! Active);
     }
 
+
+
+    private void OnParametersChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if(e.PropertyName == nameof(Parameters.ActiveSegmentColor))
+            ActiveColor = Parameters.ActiveSegmentColor;
+        else if (e.PropertyName == nameof(Parameters.InactiveSegmentColor))
+            InactiveColor = Parameters.InactiveSegmentColor;
+        else if (e.PropertyName == nameof(Parameters.SelectedSegmentColor))
+            SelectedColor = Parameters.SelectedSegmentColor;
+    }
 }
