@@ -8,6 +8,8 @@ public abstract partial class ClockBaseVM : ObservableObject
 {
     protected ClockBaseVM(IClockUpdater updater, ParametersVM parameters)
     {
+        ClockParameters = parameters;
+
         SecondFirst = new(parameters);
         SecondLast = new(parameters);
         MinuteFirst = new(parameters);
@@ -25,6 +27,9 @@ public abstract partial class ClockBaseVM : ObservableObject
         updater.UpdatedLastHour += HourLast.UpdateNumber;
         updater.UpdatedLastSecond += HourMinuteSplitter.SwitchActive;
     }
+
+    [ObservableProperty]
+    public partial ParametersVM ClockParameters { get; set; }
 
     [ObservableProperty]
     public partial bool ShowOptions { get; set; }

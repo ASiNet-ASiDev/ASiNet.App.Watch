@@ -7,7 +7,7 @@ public interface IClockUpdater : IDisposable
     public event Action<int>? UpdatedLastMinute;
     public event Action<int>? UpdatedFirstHour;
     public event Action<int>? UpdatedLastHour;
-
+    public event Action? TimeUp;
 
     public double UPS { get; set; }
 
@@ -17,5 +17,6 @@ public interface IClockUpdater : IDisposable
 
     public void Stop();
 
-    public void CallUpdate();
+
+    public void Reset();
 }

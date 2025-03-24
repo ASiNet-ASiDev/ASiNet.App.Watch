@@ -31,6 +31,7 @@
             </MenuItem>
             <MenuItem DataContext="{Binding Parameters}" Header="Clock style">
                 <MenuItem Header="Show/Hide more options" Command="{Binding ShowHideMoreOptionsCommand}"/>
+                <MenuItem Header="Change numbers spacing" Command="{Binding OpenClockSpacingOptionsCommand}"/>
             </MenuItem>
             <MenuItem Name="CloseBtn" Header="Close" Click="CloseBtn_Click"/>
         </ContextMenu>

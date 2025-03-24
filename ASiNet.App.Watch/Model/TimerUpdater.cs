@@ -1,34 +1,8 @@
 ﻿using System.Diagnostics;
-using System.Windows.Media.Animation;
 
 namespace ASiNet.App.Watch.Model;
-public class TimerUpdater : IClockUpdater
+public class TimerUpdater : ClockUpdaterBase
 {
-    public bool IsRunning => !_cts?.IsCancellationRequested ?? false;
-
-    public event Action<int>? UpdatedFirstSecond;
-    public event Action<int>? UpdatedLastSecond;
-    public event Action<int>? UpdatedFirstMinute;
-    public event Action<int>? UpdatedLastMinute;
-    public event Action<int>? UpdatedFirstHour;
-    public event Action<int>? UpdatedLastHour;
-    public event Action? TimeUp;
-
-    public double UPS
-    {
-        get => (double)1000 / (double)_updateDelay;
-        set
-        {
-            if (value < 0)
-                throw new IndexOutOfRangeException();
-            if (value > 1000)
-                throw new IndexOutOfRangeException();
-            _updateDelay = (int)Math.Round(1000 / value);
-        }
-    }
-
-    private int _updateDelay = 100;
-
     public TimeSpan CurrentTime
     {
         get => _currentTime;
@@ -42,33 +16,24 @@ public class TimerUpdater : IClockUpdater
 
     private TimeSpan _currentTime = TimeSpan.Zero;
 
-    private CancellationTokenSource? _cts;
-
-    public void Start()
+    public override void Start()
     {
-        if(CurrentTime.TotalSeconds <= 1)
+        if (CurrentTime.TotalSeconds <= 1)
             return;
-        if (_cts is not null && !_cts.IsCancellationRequested)
-            return;
-
-        _cts?.Dispose();
-        _cts = new();
-        _ = Updater(_cts.Token);
+        base.Start();
     }
 
-    public void Stop()
+    public override void Stop()
     {
-        if (_cts is null || _cts.IsCancellationRequested)
-            return;
-        _cts?.Cancel();
+        base.Stop();
     }
 
-    public void CallUpdate()
+    public override void Reset()
     {
-        throw new NotImplementedException();
+        _currentTime = TimeSpan.Zero;
     }
 
-    private async Task Updater(CancellationToken token)
+    protected override async Task Updater(CancellationToken token)
     {
         InvokeUpdateSecond(_currentTime.Seconds);
         InvokeUpdateMinute(_currentTime.Minutes);
@@ -82,9 +47,6 @@ public class TimerUpdater : IClockUpdater
             {
                 UpdateTime(_currentTime, TimeSpan.FromSeconds(time.Seconds));
                 lastTime = dt;
-#if DEBUG
-                Debug.WriteLine($"TIMER_TIME_RECALC: [{lastTime:G} -> {dt:G}] {time}");
-#endif
             }
             try
             {
@@ -102,17 +64,14 @@ public class TimerUpdater : IClockUpdater
         var newSecond = newTime.Seconds;
         var newMinute = newTime.Minutes;
         var newHour = (int)Math.Floor(newTime.TotalHours);
-        if(newTime.TotalSeconds <= 0)
+        if (newTime.TotalSeconds <= 0)
         {
             InvokeUpdateSecond(0);
             InvokeUpdateMinute(0);
             InvokeUpdateHour(0);
-            TimeUp?.Invoke();
-            _currentTime = TimeSpan.Zero;
+            InvokeTimeUp();
+            Reset();
             Stop();
-#if DEBUG
-            Debug.WriteLine($"TIMER_TIMEUP: {time} -> {newTime}");
-#endif
             return;
         }
         else
@@ -124,50 +83,9 @@ public class TimerUpdater : IClockUpdater
             if (hour != newHour)
                 InvokeUpdateHour(newHour);
         }
-        #if DEBUG
+#if DEBUG
         Debug.WriteLine($"TIMER_UPDATE: {time} -> {newTime}");
-        #endif
+#endif
         _currentTime = newTime;
-    }
-
-    private void InvokeUpdateSecond(int second)
-    {
-        var first = second / 10;
-        var last = second % 10;
-        UpdatedFirstSecond?.Invoke(first);
-        UpdatedLastSecond?.Invoke(last);
-    }
-
-    private void InvokeUpdateMinute(int minute)
-    {
-        var first = minute / 10;
-        var last = minute % 10;
-        UpdatedFirstMinute?.Invoke(first);
-        UpdatedLastMinute?.Invoke(last);
-    }
-
-    private void InvokeUpdateHour(int hour)
-    {
-        var first = hour / 10;
-        var last = hour % 10;
-        UpdatedFirstHour?.Invoke(first);
-        UpdatedLastHour?.Invoke(last);
-    }
-
-    public void Dispose()
-    {
-        if (_cts is not null)
-        {
-            if (!_cts.IsCancellationRequested)
-                _cts.Cancel();
-            _cts.Dispose();
-        }
-        UpdatedFirstHour = null;
-        UpdatedLastHour = null;
-        UpdatedFirstMinute = null;
-        UpdatedLastMinute = null;
-        UpdatedFirstSecond = null;
-        UpdatedLastSecond = null;
-        TimeUp = null;
     }
 }

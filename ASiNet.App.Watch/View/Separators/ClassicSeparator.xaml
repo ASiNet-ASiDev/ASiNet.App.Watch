@@ -8,27 +8,25 @@
              xmlns:vm="clr-namespace:ASiNet.App.Watch.ViewModel"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:NumberVM}">
     <Viewbox Stretch="Uniform" StretchDirection="Both">
-        <Path x:Name="Segment" Width="20" Height="250" Fill="White" Stretch="None">
+        <Path x:Name="Segment" Width="20" Fill="White" Stretch="None">
             <Path.Data>
                 <GeometryGroup>
                     <PathGeometry>
-                        <PathFigure IsClosed="True" StartPoint="10,20">
-                            <LineSegment Point="20,30"/>
-                            <LineSegment Point="20,60"/>
-                            <LineSegment Point="20,60"/>
-                            <LineSegment Point="10,70"/>
-                            <LineSegment Point="0,60"/>
-                            <LineSegment Point="0,30"/>
+                        <PathFigure IsClosed="True" StartPoint="10,00">
+                            <LineSegment Point="20,10"/>
+                            <LineSegment Point="20,20"/>
+                            <LineSegment Point="10,30"/>
+                            <LineSegment Point="0,20"/>
+                            <LineSegment Point="0,10"/>
                         </PathFigure>
                     </PathGeometry>
                     <PathGeometry>
-                        <PathFigure IsClosed="True" StartPoint="10,180">
-                            <LineSegment Point="20,190"/>
-                            <LineSegment Point="20,220"/>
-                            <LineSegment Point="20,220"/>
-                            <LineSegment Point="10,230"/>
-                            <LineSegment Point="0,220"/>
-                            <LineSegment Point="0,190"/>
+                        <PathFigure IsClosed="True" StartPoint="10,130">
+                            <LineSegment Point="20,140"/>
+                            <LineSegment Point="20,150"/>
+                            <LineSegment Point="10,160"/>
+                            <LineSegment Point="0,150"/>
+                            <LineSegment Point="0,140"/>
                         </PathFigure>
                     </PathGeometry>
                 </GeometryGroup>
