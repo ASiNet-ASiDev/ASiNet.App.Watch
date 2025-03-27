@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="ASiNet.App.Watch.View.ValueSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ASiNet.App.Watch.View"
+             mc:Ignorable="d">
+    <Grid Margin="5" Grid.Row="2" DataContext="{Binding ., RelativeSource={RelativeSource AncestorType=local:ValueSelector}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.ColumnSpan="2" Text="{Binding Header}"/>
+        <TextBlock Grid.Row="1" Text="{Binding Value, StringFormat='{}'}" MinWidth="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Slider x:Name="Slider" Grid.Row="1" Grid.Column="1" Minimum="{Binding Minimum, Mode=OneWay}" MinWidth="100" Maximum="{Binding Maximum, Mode=OneWay}" Value="{Binding Value, Mode=TwoWay}"/>
+    </Grid>
+</UserControl>

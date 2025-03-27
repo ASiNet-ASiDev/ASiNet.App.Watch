@@ -26,50 +26,50 @@
                                     Grid.Column="1" Grid.Row="2"
                                     HorizontalAlignment="Center" 
                                     VerticalAlignment="Center" 
-                                    ActiveColor="{Binding ActiveColor}" 
-                                    InactiveColor="{Binding InactiveColor}"
-                                    SelectedColor="{Binding SelectedColor}"/>
+                                    ActiveColor="{Binding Parameters.ActiveColor}" 
+                                    InactiveColor="{Binding Parameters.InactiveColor}"
+                                    SelectedColor="{Binding Parameters.SelectedColor}"/>
         <s:ClassicSegmentVertical x:Name="SegmentTopLeft" Margin="-5"
                                   Grid.Column="0" Grid.Row="1"
                                   HorizontalAlignment="Center" 
                                   VerticalAlignment="Center" 
-                                  ActiveColor="{Binding ActiveColor}" 
-                                  InactiveColor="{Binding InactiveColor}"
-                                  SelectedColor="{Binding SelectedColor}"/>
+                                  ActiveColor="{Binding Parameters.ActiveColor}" 
+                                  InactiveColor="{Binding Parameters.InactiveColor}"
+                                  SelectedColor="{Binding Parameters.SelectedColor}"/>
         <s:ClassicSegmentVertical x:Name="SegmentTopRight" Margin="-5"
                                   Grid.Column="2" Grid.Row="1"
                                   HorizontalAlignment="Center" 
                                   VerticalAlignment="Center" 
-                                  ActiveColor="{Binding ActiveColor}" 
-                                  InactiveColor="{Binding InactiveColor}"
-                                  SelectedColor="{Binding SelectedColor}"/>
+                                  ActiveColor="{Binding Parameters.ActiveColor}" 
+                                  InactiveColor="{Binding Parameters.InactiveColor}"
+                                  SelectedColor="{Binding Parameters.SelectedColor}"/>
         <s:ClassicSegmentHorizontal x:Name="SegmentTopMiddle" Margin="-5"
                                     Grid.Column="1" Grid.Row="0" 
                                     HorizontalAlignment="Center" 
                                     VerticalAlignment="Center" 
-                                    ActiveColor="{Binding ActiveColor}" 
-                                    InactiveColor="{Binding InactiveColor}"
-                                    SelectedColor="{Binding SelectedColor}"/>
+                                    ActiveColor="{Binding Parameters.ActiveColor}" 
+                                    InactiveColor="{Binding Parameters.InactiveColor}"
+                                    SelectedColor="{Binding Parameters.SelectedColor}"/>
         <s:ClassicSegmentVertical x:Name="SegmentButtonLeft" Margin="-5"
                                   Grid.Column="0" Grid.Row="3"
                                   HorizontalAlignment="Center" 
                                   VerticalAlignment="Center" 
-                                  ActiveColor="{Binding ActiveColor}" 
-                                  InactiveColor="{Binding InactiveColor}"
-                                  SelectedColor="{Binding SelectedColor}"/>
+                                  ActiveColor="{Binding Parameters.ActiveColor}" 
+                                  InactiveColor="{Binding Parameters.InactiveColor}"
+                                  SelectedColor="{Binding Parameters.SelectedColor}"/>
         <s:ClassicSegmentVertical x:Name="SegmentButtonRight" Margin="-5"
                                   Grid.Column="3" Grid.Row="3"
                                   HorizontalAlignment="Center" 
                                   VerticalAlignment="Center" 
-                                  ActiveColor="{Binding ActiveColor}" 
-                                  InactiveColor="{Binding InactiveColor}"
-                                  SelectedColor="{Binding SelectedColor}"/>
+                                  ActiveColor="{Binding Parameters.ActiveColor}" 
+                                  InactiveColor="{Binding Parameters.InactiveColor}"
+                                  SelectedColor="{Binding Parameters.SelectedColor}"/>
         <s:ClassicSegmentHorizontal x:Name="SegmentButtonMiddle" Margin="-5"
                                     Grid.Column="1" Grid.Row="4"
                                     HorizontalAlignment="Center" 
                                     VerticalAlignment="Center" 
-                                    ActiveColor="{Binding ActiveColor}" 
-                                    InactiveColor="{Binding InactiveColor}"
-                                    SelectedColor="{Binding SelectedColor}"/>
+                                    ActiveColor="{Binding Parameters.ActiveColor}" 
+                                    InactiveColor="{Binding Parameters.InactiveColor}"
+                                    SelectedColor="{Binding Parameters.SelectedColor}"/>
     </Grid>
 </Viewbox>

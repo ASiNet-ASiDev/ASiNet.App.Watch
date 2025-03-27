@@ -50,4 +50,17 @@ public partial class WatchWindow : Window
 #endif
         ((WatchWindowVM?)DataContext)?.InitCommand?.Execute(null);
     }
+
+    protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+    {
+        if(e.Property.Name == nameof(Width)) 
+        {
+
+        }
+        else if(e.Property.Name == nameof(Height))
+        {
+            
+        }
+        base.OnPropertyChanged(e);
+    }
 }

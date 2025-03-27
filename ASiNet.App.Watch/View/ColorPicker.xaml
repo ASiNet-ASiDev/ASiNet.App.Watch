@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="ASiNet.App.Watch.View.ColorPicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ASiNet.App.Watch.View"
+             mc:Ignorable="d" >
+    <Grid x:Name="Root" DataContext="{Binding ., RelativeSource={RelativeSource AncestorType=local:ColorPicker}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <SolidColorBrush Color="{Binding ResultColor, Mode=OneWay}"/> 
+        </Grid.Background>
+        <local:ValueSelector x:Name="vsA" Grid.Column="0" Header="Alpha" Minimum="0" Maximum="255"/>
+        <local:ValueSelector x:Name="vsR" Grid.Column="1" Header="Red" Minimum="0" Maximum="255"/>
+        <local:ValueSelector x:Name="vsG" Grid.Column="2" Header="Green" Minimum="0" Maximum="255"/>
+        <local:ValueSelector x:Name="vsB" Grid.Column="3" Header="Blue" Minimum="0" Maximum="255"/>
+    </Grid>
+</UserControl>

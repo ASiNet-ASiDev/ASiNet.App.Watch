@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 
 namespace ASiNet.App.Watch.View;
 /// <summary>
-/// Логика взаимодействия для ClockSpacingOptionsWindow.xaml
+/// Логика взаимодействия для OptionsWindow.xaml
 /// </summary>
-public partial class ClockSpacingOptionsWindow : Window
+public partial class OptionsWindow : Window
 {
-    public ClockSpacingOptionsWindow()
+    public OptionsWindow()
     {
         InitializeComponent();
     }

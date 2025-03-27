@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using System.Windows;
 using System.Windows.Media;
 
 namespace ASiNet.App.Watch.Model.Config;
@@ -12,12 +13,20 @@ public abstract class ConfigBrush
 
 
 
-    public static Brush ReadBrush(ConfigBrush brush)
+    public static Brush ReadBrush(ConfigBrush brush, Brush? def = null)
     {
         if(brush is SolidBrush solid)
         {
-            var color = (Color)ColorConverter.ConvertFromString(solid.HEXColor);
-            return new SolidColorBrush(color);
+            try
+            {
+                var color = (Color)ColorConverter.ConvertFromString(solid.HEXColor);
+                return new SolidColorBrush(color);
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show($"Color '{brush.HEXColor}' it is not a color of the supported format '#00000000'-'#FFFFFFFF'.", "Read color error :(", MessageBoxButton.OK, MessageBoxImage.Error);
+                return def ?? throw new NullReferenceException();
+            }
         }
         throw new NotImplementedException();
     }

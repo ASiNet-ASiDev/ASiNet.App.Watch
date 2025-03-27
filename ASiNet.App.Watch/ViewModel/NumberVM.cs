@@ -6,17 +6,13 @@ using CommunityToolkit.Mvvm.ComponentModel;
 namespace ASiNet.App.Watch.ViewModel;
 public partial class NumberVM : ObservableObject
 {
-    public NumberVM(ParametersVM parameters)
+    public NumberVM(NumberParametersVM parameters)
     {
         Parameters = parameters;
-        Parameters.PropertyChanged += OnParametersChanged;
-        SelectedColor = parameters.SelectedSegmentColor;
-        InactiveColor = parameters.InactiveSegmentColor;
-        ActiveColor = parameters.ActiveSegmentColor;
     }
 
     [ObservableProperty]
-    public partial ParametersVM Parameters { get; set; }
+    public partial NumberParametersVM Parameters { get; set; }
 
     [ObservableProperty]
     public partial int Number { get; set; } = -1;
@@ -28,16 +24,6 @@ public partial class NumberVM : ObservableObject
     [ObservableProperty]
     public partial int AnimationNumber { get; set; }
 
-    [ObservableProperty]
-    public partial Brush ActiveColor { get; set; }
-
-    [ObservableProperty]
-    public partial Brush InactiveColor { get; set; }
-
-    [ObservableProperty]
-    public partial Brush SelectedColor { get; set; }
-
-
     public void UpdateNumber(int number)
     {
         Dispatcher.CurrentDispatcher.Invoke(() => Number = number);
@@ -46,17 +32,5 @@ public partial class NumberVM : ObservableObject
     public void SwitchActive(int _)
     {
         Dispatcher.CurrentDispatcher.Invoke(() => Active =! Active);
-    }
-
-
-
-    private void OnParametersChanged(object? sender, PropertyChangedEventArgs e)
-    {
-        if(e.PropertyName == nameof(Parameters.ActiveSegmentColor))
-            ActiveColor = Parameters.ActiveSegmentColor;
-        else if (e.PropertyName == nameof(Parameters.InactiveSegmentColor))
-            InactiveColor = Parameters.InactiveSegmentColor;
-        else if (e.PropertyName == nameof(Parameters.SelectedSegmentColor))
-            SelectedColor = Parameters.SelectedSegmentColor;
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows;
 using System.Windows.Media;
 using ASiNet.App.Watch.Model.Config;
 using ASiNet.App.Watch.View;
@@ -11,19 +13,50 @@ public partial class ParametersVM : ObservableObject
 
     public ParametersVM()
     {
-        var cnf = ClockConfig.ReadOrDefault();
+        var cnf = AppConfig.ReadOrDefault();
         _config = cnf;
         UpdateValuesFromConfig();
     }
 
+
+    [ObservableProperty]
+    public partial double AppWidth { get; set; }
+
+    [ObservableProperty]
+    public partial double AppHeight { get; set; }
+
     [ObservableProperty]
     public partial bool HideMoreOptions { get; set; }
     [ObservableProperty]
-    public partial Brush SelectedSegmentColor { get; set; } = null!;
+    public partial NumberParametersVM HourFirst { get; set; } = null!;
+
     [ObservableProperty]
-    public partial Brush ActiveSegmentColor { get; set; } = null!;
+    public partial NumberParametersVM HourLast { get; set; } = null!;
+
     [ObservableProperty]
-    public partial Brush InactiveSegmentColor { get; set; } = null!;
+    public partial NumberParametersVM MinuteFirst { get; set; } = null!;
+
+    [ObservableProperty]
+    public partial NumberParametersVM MinuteLast { get; set; } = null!;
+
+    [ObservableProperty]
+    public partial NumberParametersVM SecondFirst { get; set; } = null!;
+
+    [ObservableProperty]
+    public partial NumberParametersVM SecondLast { get; set; } = null!;
+
+    [ObservableProperty]
+    public partial NumberParametersVM HourMinuteSplitter { get; set; } = null!;
+
+
+    [ObservableProperty]
+    public partial ButtonParametersVM ClockButton { get; set; } = null!;
+    [ObservableProperty]
+    public partial ButtonParametersVM TimerButton { get; set; } = null!;
+    [ObservableProperty]
+    public partial ButtonParametersVM StopWatchButton { get; set; } = null!;
+
+
     [ObservableProperty]
     public partial int HourSpace { get; set; }
     [ObservableProperty]
@@ -36,86 +69,120 @@ public partial class ParametersVM : ObservableObject
     public partial int SecondSpace { get; set; }
 
 
-    private ClockConfig _config;
+    private AppConfig _config;
 
     [RelayCommand]
     private void ShowHideMoreOptions()
     {
         HideMoreOptions = !HideMoreOptions;
-        ClockConfig.Write(_config);
+        AppConfig.Write(_config);
     }
 
 
     [RelayCommand]
     private void OpenClockSpacingOptions()
     {
-        var ow = new ClockSpacingOptionsWindow() { DataContext = this };
+        var ow = new OptionsWindow() { DataContext = this };
         ow.ShowDialog();
-        ClockConfig.Write(_config);
+        AppConfig.Write(_config);
     }
 
     [RelayCommand]
     private void SaveConfig()
     {
-        ClockConfig.Write(_config);
+        AppConfig.Write(_config);
     }
 
 
     [RelayCommand]
     private void LoadConfig()
     {
-        _config = ClockConfig.ReadOrDefault();
+        _config = AppConfig.ReadOrDefault();
         UpdateValuesFromConfig();
     }
 
 
-    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+    [RelayCommand]
+    public void ToDefault()
     {
-        switch (e.PropertyName)
+        _config = AppConfig.Default;
+        UpdateValuesFromConfig();
+        AppConfig.Write(_config);
+    }
+
+
+
+    [RelayCommand]
+    private void AppSizeSet(string preset)
+    {
+        switch (preset)
         {
-            case nameof(HideMoreOptions):
-                _config.HideMoreOptions = HideMoreOptions;
+            case "0":
+                _config.AppWidth = 300;
+                _config.AppHeight = 150;
                 break;
-            case nameof(SelectedSegmentColor):
-                _config.Colors.HourFirst.SelectedSegmentColor = ConfigBrush.FromBrush(SelectedSegmentColor);
+            case "1":
+                _config.AppWidth = 600;
+                _config.AppHeight = 300;
                 break;
-            case nameof(ActiveSegmentColor):
-                _config.Colors.HourFirst.ActiveSegmentColor = ConfigBrush.FromBrush(ActiveSegmentColor);
+            case "2":
+                _config.AppWidth = 650;
+                _config.AppHeight = 350;
                 break;
-            case nameof(InactiveSegmentColor):
-                _config.Colors.HourFirst.InactiveSegmentColor = ConfigBrush.FromBrush(InactiveSegmentColor);
+            case "3":
+                _config.AppWidth = 750;
+                _config.AppHeight = 400;
                 break;
-            case nameof(HourSpace):
-                _config.ClockSegmentsSpacing.HourSpace = HourSpace;
+            case "4":
+                _config.AppWidth = 850;
+                _config.AppHeight = 400;
                 break;
-            case nameof(HourMinuteSplitterSpace):
-                _config.ClockSegmentsSpacing.HourMinuteSplitterSpace = HourMinuteSplitterSpace;
+            case "5":
+                _config.AppWidth = 950;
+                _config.AppHeight = 450;
                 break;
-            case nameof(MinuteSpace):
-                _config.ClockSegmentsSpacing.MinuteSpace = MinuteSpace;
-                break;
-            case nameof(MinuteSecondSpace):
-                _config.ClockSegmentsSpacing.MinuteSecondSpace = MinuteSecondSpace;
-                break;
-            case nameof(SecondSpace):
-                _config.ClockSegmentsSpacing.SecondSpace = SecondSpace;
+            case "6":
+                _config.AppWidth = 1000;
+                _config.AppHeight = 500;
                 break;
         }
-
-        base.OnPropertyChanged(e);
+        UpdateValuesFromConfig();
+        AppConfig.Write(_config);
     }
+
 
 
     private void UpdateValuesFromConfig()
     {
-        HideMoreOptions = _config.HideMoreOptions;
-        InactiveSegmentColor = ConfigBrush.ReadBrush(_config.Colors.HourFirst.InactiveSegmentColor);
-        ActiveSegmentColor = ConfigBrush.ReadBrush(_config.Colors.HourFirst.ActiveSegmentColor);
-        SelectedSegmentColor = ConfigBrush.ReadBrush(_config.Colors.HourFirst.SelectedSegmentColor);
-        HourSpace = _config.ClockSegmentsSpacing.HourSpace;
-        MinuteSpace = _config.ClockSegmentsSpacing.MinuteSpace;
-        SecondSpace = _config.ClockSegmentsSpacing.SecondSpace;
-        MinuteSecondSpace = _config.ClockSegmentsSpacing.MinuteSecondSpace;
-        HourMinuteSplitterSpace = _config.ClockSegmentsSpacing.HourMinuteSplitterSpace;
+        try
+        {
+            AppWidth = _config.AppWidth <= 100 ? 100 : _config.AppWidth;
+            AppHeight = _config.AppHeight <= 50 ? 50 : _config.AppHeight;
+            HideMoreOptions = _config.HideMoreOptions;
+            HourSpace = _config.ClockSegmentsSpacing.HourSpace;
+            MinuteSpace = _config.ClockSegmentsSpacing.MinuteSpace;
+            SecondSpace = _config.ClockSegmentsSpacing.SecondSpace;
+            MinuteSecondSpace = _config.ClockSegmentsSpacing.MinuteSecondSpace;
+            HourMinuteSplitterSpace = _config.ClockSegmentsSpacing.HourMinuteSplitterSpace;
+
+            (HourFirst ??= new(_config.Colors.HourFirst)).SetColors(_config.Colors.HourFirst);
+            (HourLast ??= new(_config.Colors.HourLast)).SetColors(_config.Colors.HourLast);
+
+            (MinuteFirst ??= new(_config.Colors.MinuteFirst)).SetColors(_config.Colors.MinuteFirst);
+            (MinuteLast ??= new(_config.Colors.MinuteLast)).SetColors(_config.Colors.MinuteLast);
+
+            (SecondFirst ??= new(_config.Colors.SecondFirst)).SetColors(_config.Colors.SecondFirst);
+            (SecondLast ??= new(_config.Colors.SecondLast)).SetColors(_config.Colors.SecondLast);
+
+            (HourMinuteSplitter ??= new(_config.Colors.HourMinuteSplitter)).SetColors(_config.Colors.HourMinuteSplitter);
+
+            (ClockButton ??= new(_config.ButtonsConfig.ClockButton)).SetColors(_config.ButtonsConfig.ClockButton);
+            (TimerButton ??= new(_config.ButtonsConfig.TimerButton)).SetColors(_config.ButtonsConfig.TimerButton);
+            (StopWatchButton ??= new(_config.ButtonsConfig.StopWatchButton)).SetColors(_config.ButtonsConfig.StopWatchButton);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Message:\n{ex.Message}", "Read config error :(", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }

@@ -43,34 +43,34 @@
                 </Grid.RowDefinitions>
                 <Border Visibility="{Binding Interactive, Converter={StaticResource btv}}" 
                         Grid.Column="0" Grid.RowSpan="2" 
-                        BorderThickness="0" Background="#10000000" MouseWheel="HourFirstSegment_MouseWheel"
+                        BorderThickness="0" Background="#01000000" MouseWheel="HourFirstSegment_MouseWheel"
                         Panel.ZIndex="1" x:Name="FirstHourInteractBox"
                         MouseEnter="FirstHourInteractBox_MouseEnter" MouseLeave="FirstHourInteractBox_MouseLeave"/>
                 <Border Visibility="{Binding Interactive, Converter={StaticResource btv}}" 
                         Grid.Column="2" Grid.RowSpan="2" 
-                        BorderThickness="0" Background="#10000000" MouseWheel="HourLastSegment_MouseWheel"
+                        BorderThickness="0" Background="#01000000" MouseWheel="HourLastSegment_MouseWheel"
                         Panel.ZIndex="1" x:Name="LastHourInteractBox"
                         MouseEnter="LastHourInteractBox_MouseEnter" MouseLeave="LastHourInteractBox_MouseLeave"/>
 
                 <Border Visibility="{Binding Interactive, Converter={StaticResource btv}}" 
                         Grid.Column="6" Grid.RowSpan="2" 
-                        BorderThickness="0" Background="#10000000" MouseWheel="FirstMinute_MouseWheel"
+                        BorderThickness="0" Background="#01000000" MouseWheel="FirstMinute_MouseWheel"
                         Panel.ZIndex="1" x:Name="FirstMinuteInteractBox"
                         MouseEnter="FirstMinuteInteractBox_MouseEnter" MouseLeave="FirstMinuteInteractBox_MouseLeave"/>
                 <Border Visibility="{Binding Interactive, Converter={StaticResource btv}}" 
                         Grid.Column="8" Grid.RowSpan="2" 
-                        BorderThickness="0" Background="#10000000" MouseWheel="LastMinute_MouseWheel"
+                        BorderThickness="0" Background="#01000000" MouseWheel="LastMinute_MouseWheel"
                         Panel.ZIndex="1" x:Name="LastMinuteInteractBox"
                         MouseEnter="LastMinuteInteractBox_MouseEnter" MouseLeave="LastMinuteInteractBox_MouseLeave"/>
 
                 <Border Visibility="{Binding Interactive, Converter={StaticResource btv}}" 
                         Grid.Column="10" Grid.Row="1" BorderThickness="0" 
-                        Background="#10000000" MouseWheel="FirstSecond_MouseWheel"
+                        Background="#01000000" MouseWheel="FirstSecond_MouseWheel"
                         Panel.ZIndex="1" x:Name="FirstSecondInteractBox"
                         MouseEnter="FirstSecondInteractBox_MouseEnter" MouseLeave="FirstSecondInteractBox_MouseLeave"/>
                 <Border Visibility="{Binding Interactive, Converter={StaticResource btv}}" 
                         Grid.Column="12" Grid.Row="1" BorderThickness="0" 
-                        Background="#10000000" MouseWheel="LastSecond_MouseWheel"
+                        Background="#01000000" MouseWheel="LastSecond_MouseWheel"
                         x:Name="LastSecondInteractBox"
                         Panel.ZIndex="1"
                         MouseEnter="LastSecondInteractBox_MouseEnter" MouseLeave="LastSecondInteractBox_MouseLeave"/>
@@ -94,8 +94,9 @@
                                     Grid.Column="4" Grid.RowSpan="2" Width="20"
                                     VerticalAlignment="Center" HorizontalAlignment="Center"
                                     DataContext="{Binding HourMinuteSplitter}" ActiveSegment="{Binding Active}"
-                                    ActiveColor="{Binding ActiveColor}" InactiveColor="{Binding InactiveColor}"
-                                    SelectedColor="{Binding SelectedColor}"
+                                    ActiveColor="{Binding Parameters.ActiveColor}" 
+                                    InactiveColor="{Binding Parameters.InactiveColor}"
+                                    SelectedColor="{Binding Parameters.SelectedColor}"
                                     IsHitTestVisible="False"/>
                 <n:ClassicNumber x:Name="FirstMinute"
                                  Grid.Column="6" Grid.RowSpan="2"

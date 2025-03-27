@@ -1,0 +1,49 @@
+﻿<Button x:Class="ASiNet.App.Watch.View.GeometryButton"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:ASiNet.App.Watch.View"
+        xmlns:cnv="clr-namespace:ASiNet.App.Watch.Converters"
+        mc:Ignorable="d" 
+        d:DesignHeight="250" d:DesignWidth="250">
+    <Button.Resources>
+        <cnv:BooleanToVisConverter x:Key="btvis"/>
+    </Button.Resources>
+    <Button.Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid HorizontalAlignment="Center" 
+                              VerticalAlignment="Center" 
+                              DataContext="{Binding ., RelativeSource={RelativeSource AncestorType=local:GeometryButton}, Mode=OneWay}" 
+                              Background="#01000000">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Path x:Name="btn_geometry" Data="{Binding Geometry, Mode=OneWay}" Fill="{Binding GeometryColor, Mode=OneWay}" Stretch="Uniform">
+
+                            </Path>
+                            <TextBlock x:Name="btn_text" Visibility="{Binding ShowText, Converter={StaticResource btvis}}" Grid.Row="1" Margin="0,5,0,0" FontSize="18" Text="{Binding Text, Mode=OneWay}" Foreground="{Binding TextColor, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="btn_geometry" Property="Fill" Value="{Binding MouseEnterGeometryColor}"/>
+                                <Setter TargetName="btn_text" Property="Foreground" Value="{Binding MouseEnterTextColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="btn_geometry" Property="Fill" Value="{Binding PressedGeometryColor}"/>
+                                <Setter TargetName="btn_text" Property="Foreground" Value="{Binding PressedTextColor}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Button.Style>
+</Button>

@@ -10,13 +10,13 @@ public abstract partial class ClockBaseVM : ObservableObject
     {
         ClockParameters = parameters;
 
-        SecondFirst = new(parameters);
-        SecondLast = new(parameters);
-        MinuteFirst = new(parameters);
-        MinuteLast = new(parameters);
-        HourFirst = new(parameters);
-        HourLast = new(parameters);
-        HourMinuteSplitter = new(parameters);
+        SecondFirst = new(parameters.SecondFirst);
+        SecondLast = new(parameters.SecondLast);
+        MinuteFirst = new(parameters.MinuteFirst);
+        MinuteLast = new(parameters.MinuteLast);
+        HourFirst = new(parameters.HourFirst);
+        HourLast = new(parameters.HourLast);
+        HourMinuteSplitter = new(parameters.HourMinuteSplitter);
 
         InteractiveResult = TimeSpan.FromSeconds(1);
         updater.UpdatedFirstSecond += SecondFirst.UpdateNumber;

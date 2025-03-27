@@ -5,8 +5,16 @@ using System.Text.Json.Serialization;
 using System.Windows;
 
 namespace ASiNet.App.Watch.Model.Config;
-public class ClockConfig
+public class AppConfig
 {
+
+
+    [JsonPropertyName("app_width")]
+    public int AppWidth { get; set; }
+
+    [JsonPropertyName("app_height")]
+    public int AppHeight { get; set; }
+
     [JsonPropertyName("state_more_options_hide")]
     public bool HideMoreOptions { get; set; }
 
@@ -16,20 +24,26 @@ public class ClockConfig
     [JsonPropertyName("colors")]
     public ColorsConfig Colors { get; set; } = null!;
 
+    [JsonPropertyName("buttons")]
+    public ButtonsConfig ButtonsConfig { get; set; } = null!;
 
 
-
-    public static ClockConfig ReadOrDefault()
+    public static AppConfig ReadOrDefault()
     {
         var cnfPath = Path.Join(AppDomain.CurrentDomain.BaseDirectory, "config.json");
         if (File.Exists(cnfPath))
         {
             try
             {
-                using (var fs = File.OpenRead(cnfPath))
-                {
-                    return JsonSerializer.Deserialize<ClockConfig>(fs) ?? Default;
-                }
+                using var fs = File.OpenRead(cnfPath);
+                var result = JsonSerializer.Deserialize<AppConfig>(fs) ?? Default;
+
+                result.Colors ??= Default.Colors;
+                result.ButtonsConfig ??= Default.ButtonsConfig;
+                result.ClockSegmentsSpacing ??= Default.ClockSegmentsSpacing;
+
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -45,7 +59,7 @@ public class ClockConfig
         }
     }
 
-    public static void Write(ClockConfig config)
+    public static void Write(AppConfig config)
     {
         var cnfPath = Path.Join(AppDomain.CurrentDomain.BaseDirectory, "config.json");
 
@@ -63,10 +77,11 @@ public class ClockConfig
     }
 
 
-    public static ClockConfig Default => new()
+    public static AppConfig Default => new()
     {
         HideMoreOptions = false,
-
+        AppWidth = 600,
+        AppHeight = 300,
 
         ClockSegmentsSpacing = new()
         { 
@@ -85,7 +100,7 @@ public class ClockConfig
                     HEXColor = "#FFFFFFFF",
                 }, InactiveSegmentColor = new SolidBrush()
                 { 
-                    HEXColor = "#10000000"
+                    HEXColor = "#15FFFFFF"
                 }, 
                 SelectedSegmentColor = new SolidBrush()
                 { 
@@ -100,7 +115,7 @@ public class ClockConfig
                 },
                 InactiveSegmentColor = new SolidBrush()
                 {
-                    HEXColor = "#10000000"
+                    HEXColor = "#15FFFFFF"
                 },
                 SelectedSegmentColor = new SolidBrush()
                 {
@@ -115,7 +130,7 @@ public class ClockConfig
                 },
                 InactiveSegmentColor = new SolidBrush()
                 {
-                    HEXColor = "#10000000"
+                    HEXColor = "#15FFFFFF"
                 },
                 SelectedSegmentColor = new SolidBrush()
                 {
@@ -130,7 +145,7 @@ public class ClockConfig
                 },
                 InactiveSegmentColor = new SolidBrush()
                 {
-                    HEXColor = "#10000000"
+                    HEXColor = "#15FFFFFF"
                 },
                 SelectedSegmentColor = new SolidBrush()
                 {
@@ -145,7 +160,7 @@ public class ClockConfig
                 },
                 InactiveSegmentColor = new SolidBrush()
                 {
-                    HEXColor = "#10000000"
+                    HEXColor = "#15FFFFFF"
                 },
                 SelectedSegmentColor = new SolidBrush()
                 {
@@ -160,7 +175,7 @@ public class ClockConfig
                 },
                 InactiveSegmentColor = new SolidBrush()
                 {
-                    HEXColor = "#10000000"
+                    HEXColor = "#15FFFFFF"
                 },
                 SelectedSegmentColor = new SolidBrush()
                 {
@@ -175,9 +190,96 @@ public class ClockConfig
                 },
                 InactiveSegmentColor = new SolidBrush()
                 {
-                    HEXColor = "#10000000"
+                    HEXColor = "#15FFFFFF"
                 },
                 SelectedSegmentColor = new SolidBrush()
+                {
+                    HEXColor = "#FFFF0000"
+                },
+            },
+        }, 
+        ButtonsConfig = new()
+        { 
+            ClockButton = new()
+            { 
+                ShowText = false,
+                GeometryColor = new SolidBrush()
+                {
+                    HEXColor = "#FFFFFFFF"
+                },
+                TextColor = new SolidBrush()
+                {
+                    HEXColor = "#FFFFFFFF"
+                },
+                MouseEnterGeometryColor = new SolidBrush()
+                {
+                    HEXColor = "#FFEEEEEE"
+                },
+                MouseEnterTextColor = new SolidBrush()
+                {
+                    HEXColor = "#FFEEEEEE"
+                },
+                PressedGeometryColor = new SolidBrush()
+                {
+                    HEXColor = "#FFFF0000"
+                },
+                PressedTextColor = new SolidBrush()
+                {
+                    HEXColor = "#FFFF0000"
+                },
+            },
+            StopWatchButton = new()
+            {
+                ShowText = false,
+                GeometryColor = new SolidBrush()
+                {
+                    HEXColor = "#FFFFFFFF"
+                },
+                TextColor = new SolidBrush()
+                {
+                    HEXColor = "#FFFFFFFF"
+                },
+                MouseEnterGeometryColor = new SolidBrush()
+                {
+                    HEXColor = "#FFEEEEEE"
+                },
+                MouseEnterTextColor = new SolidBrush()
+                {
+                    HEXColor = "#FFEEEEEE"
+                },
+                PressedGeometryColor = new SolidBrush()
+                {
+                    HEXColor = "#FFFF0000"
+                },
+                PressedTextColor = new SolidBrush()
+                {
+                    HEXColor = "#FFFF0000"
+                },
+            },
+            TimerButton = new()
+            {
+                ShowText = false,
+                GeometryColor = new SolidBrush()
+                {
+                    HEXColor = "#FFFFFFFF"
+                },
+                TextColor = new SolidBrush()
+                {
+                    HEXColor = "#FFFFFFFF"
+                },
+                MouseEnterGeometryColor = new SolidBrush()
+                {
+                    HEXColor = "#FFEEEEEE"
+                },
+                MouseEnterTextColor = new SolidBrush()
+                {
+                    HEXColor = "#FFEEEEEE"
+                },
+                PressedGeometryColor = new SolidBrush()
+                {
+                    HEXColor = "#FFFF0000"
+                },
+                PressedTextColor = new SolidBrush()
                 {
                     HEXColor = "#FFFF0000"
                 },

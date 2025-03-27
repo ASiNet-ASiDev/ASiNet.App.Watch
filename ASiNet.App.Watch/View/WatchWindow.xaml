@@ -12,8 +12,8 @@
         AllowsTransparency="True"
         ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
-        Height="450" Width="800"
+        ResizeMode="CanResize"
+        Height="{Binding Parameters.AppHeight, Mode=TwoWay}" Width="{Binding Parameters.AppWidth, Mode=TwoWay}"
         Background="Transparent" MouseMove="Window_MouseMove" 
         MouseLeftButtonDown="Window_MouseLeftButtonDown"
         MouseLeftButtonUp="Window_MouseLeftButtonUp"
@@ -26,16 +26,28 @@
     </Window.Resources>
     <Window.ContextMenu>
         <ContextMenu>
+            <MenuItem Header="More options" DataContext="{Binding Parameters}" Command="{Binding ShowHideMoreOptionsCommand}"/>
+            <MenuItem DataContext="{Binding Parameters}" Header="Size">
+                <MenuItem Header="50%" Command="{Binding AppSizeSetCommand}" CommandParameter="0"/>
+                <MenuItem Header="100%" Command="{Binding AppSizeSetCommand}" CommandParameter="1"/>
+                <MenuItem Header="~120%" Command="{Binding AppSizeSetCommand}" CommandParameter="2"/>
+                <MenuItem Header="~130%" Command="{Binding AppSizeSetCommand}" CommandParameter="3"/>
+                <MenuItem Header="150%" Command="{Binding AppSizeSetCommand}" CommandParameter="4"/>
+                <MenuItem Header="~170%" Command="{Binding AppSizeSetCommand}" CommandParameter="5"/>
+                <MenuItem Header="200%" Command="{Binding AppSizeSetCommand}" CommandParameter="6"/>
+            </MenuItem>
+            <MenuItem DataContext="{Binding Parameters}" Header="Style">
+                <MenuItem Header="Style options" Command="{Binding OpenClockSpacingOptionsCommand}"/>
+                <MenuItem Header="Presets">
+                    <MenuItem Header="Default" Command="{Binding ToDefaultCommand}"/>
+                </MenuItem>
+            </MenuItem>
             <MenuItem DataContext="{Binding WindowContextMenu}" Header="Window settings">
                 <MenuItem Header="{Binding PinnedItemHeader}" Command="{Binding ChangeIsPinnedCommand}"/>
             </MenuItem>
-            <MenuItem DataContext="{Binding Parameters}" Header="Clock style">
-                <MenuItem Header="Show/Hide more options" Command="{Binding ShowHideMoreOptionsCommand}"/>
-                <MenuItem Header="Change numbers spacing" Command="{Binding OpenClockSpacingOptionsCommand}"/>
-            </MenuItem>
-            <MenuItem DataContext="{Binding Parameters}" Header="Config">
-                <MenuItem Header="Save" Command="{Binding SaveConfigCommand}"/>
-                <MenuItem Header="Load" Command="{Binding LoadConfigCommand}"/>
+            <MenuItem DataContext="{Binding Parameters}" Header="File">
+                <MenuItem Header="Save config" Command="{Binding SaveConfigCommand}"/>
+                <MenuItem Header="Load config" Command="{Binding LoadConfigCommand}"/>
             </MenuItem>
             <MenuItem Name="CloseBtn" Header="Close" Click="CloseBtn_Click"/>
         </ContextMenu>
@@ -46,24 +58,127 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
-        <clock:ClassicClock 
-            DataContext="{Binding Clock}" 
-            AllowInteractive="{Binding Interactive}"
-            InteractResult="{Binding InteractiveResult, Mode=TwoWay}"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"/>
+        <Viewbox>
+            <clock:ClassicClock DataContext="{Binding Clock}" 
+                                AllowInteractive="{Binding Interactive}"
+                                InteractResult="{Binding InteractiveResult, Mode=TwoWay}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+        </Viewbox>
 
-        <Grid Grid.Row="1" Visibility="{Binding Parameters.HideMoreOptions, Converter={StaticResource btv}}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Content="Clock" Command="{Binding StartClockCommand}" Grid.Column="0"/>
-            <Button Content="Timer" Command="{Binding StartTimerCommand}" Grid.Column="1"/>
-            <Button Content="StopWatch" Command="{Binding StartStopWatchCommand}" Grid.Column="2"/>
-        </Grid>
+        <Viewbox Grid.Row="1" Margin="0,5,0,0">
+            <Grid Visibility="{Binding Parameters.HideMoreOptions, Converter={StaticResource btv}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="500"/>
+                    <ColumnDefinition Width="500"/>
+                    <ColumnDefinition Width="500"/>
+                </Grid.ColumnDefinitions>
+                <local:GeometryButton Text="Clock" 
+                    Command="{Binding StartClockCommand}" 
+                    Grid.Column="0" 
+                    ShowText="{Binding Parameters.ClockButton.ShowText}"
+                    TextColor="{Binding Parameters.ClockButton.DefaultTextColor}" 
+                    GeometryColor="{Binding Parameters.ClockButton.DefaultGeometryColor}" 
+                    MouseEnterGeometryColor="{Binding Parameters.ClockButton.MouseEnterGeometryColor}"
+                    MouseEnterTextColor="{Binding Parameters.ClockButton.MouseEnterTextColor}"
+                    PressedGeometryColor="{Binding Parameters.ClockButton.PressedGeometryColor}"
+                    PressedTextColor="{Binding Parameters.ClockButton.PressedTextColor}">
+                    <local:GeometryButton.Geometry>
+                        <CombinedGeometry GeometryCombineMode="Xor">
+                            <CombinedGeometry.Geometry1>
+                                <EllipseGeometry Center="25,25" RadiusX="50" RadiusY="50"/>
+                            </CombinedGeometry.Geometry1>
+                            <CombinedGeometry.Geometry2>
+                                <CombinedGeometry GeometryCombineMode="Union">
+                                    <CombinedGeometry.Geometry1>
+                                        <RectangleGeometry Rect="20,20,10,40" RadiusX="5" RadiusY="5">
+                                            <RectangleGeometry.Transform>
+                                                <RotateTransform CenterX="25" CenterY="25" Angle="180"/>
+                                            </RectangleGeometry.Transform>
+                                        </RectangleGeometry>
+                                    </CombinedGeometry.Geometry1>
+                                    <CombinedGeometry.Geometry2>
+                                        <RectangleGeometry Rect="20,20,10,35" RadiusX="5" RadiusY="5">
+                                            <RectangleGeometry.Transform>
+                                                <RotateTransform CenterX="25" CenterY="25" Angle="-40"/>
+                                            </RectangleGeometry.Transform>
+                                        </RectangleGeometry>
+                                    </CombinedGeometry.Geometry2>
+                                </CombinedGeometry>
+                            </CombinedGeometry.Geometry2>
+                        </CombinedGeometry>
+                    </local:GeometryButton.Geometry>
+                </local:GeometryButton>
+                <local:GeometryButton Text="Timer" Command="{Binding StartTimerCommand}" Grid.Column="1"
+                    ShowText="{Binding Parameters.TimerButton.ShowText}"
+                    TextColor="{Binding Parameters.TimerButton.DefaultTextColor}" 
+                    GeometryColor="{Binding Parameters.TimerButton.DefaultGeometryColor}" 
+                    MouseEnterGeometryColor="{Binding Parameters.TimerButton.MouseEnterGeometryColor}"
+                    MouseEnterTextColor="{Binding Parameters.TimerButton.MouseEnterTextColor}"
+                    PressedGeometryColor="{Binding Parameters.TimerButton.PressedGeometryColor}"
+                    PressedTextColor="{Binding Parameters.TimerButton.PressedTextColor}">
+                    <local:GeometryButton.Geometry>
+                        <CombinedGeometry GeometryCombineMode="Union">
+                            <CombinedGeometry.Geometry1>
+                                <RectangleGeometry Rect="5,-50,40,15" RadiusX="5" RadiusY="5"/>
+                            </CombinedGeometry.Geometry1>
+                            <CombinedGeometry.Geometry2>
+                                <CombinedGeometry GeometryCombineMode="Xor">
+                                    <CombinedGeometry.Geometry1>
+                                        <EllipseGeometry Center="25,25" RadiusX="50" RadiusY="50"/>
+                                    </CombinedGeometry.Geometry1>
+                                    <CombinedGeometry.Geometry2>
+                                        <CombinedGeometry GeometryCombineMode="Xor">
+                                            <CombinedGeometry.Geometry1>
+                                                <EllipseGeometry Center="25,25" RadiusX="40" RadiusY="40"/>
+                                            </CombinedGeometry.Geometry1>
+                                            <CombinedGeometry.Geometry2>
+                                                <RectangleGeometry Rect="20,20,10,35" RadiusX="5" RadiusY="5">
+                                                    <RectangleGeometry.Transform>
+                                                        <RotateTransform CenterX="25" CenterY="25" Angle="180"/>
+                                                    </RectangleGeometry.Transform>
+                                                </RectangleGeometry>
+                                            </CombinedGeometry.Geometry2>
+                                        </CombinedGeometry>
+                                    </CombinedGeometry.Geometry2>
+                                </CombinedGeometry>
+                            </CombinedGeometry.Geometry2>
+                        </CombinedGeometry>
+                    </local:GeometryButton.Geometry>
+                </local:GeometryButton>
+                <local:GeometryButton Text="Stop watch" Command="{Binding StartStopWatchCommand}" Grid.Column="2"
+                    ShowText="{Binding Parameters.StopWatchButton.ShowText}"
+                    TextColor="{Binding Parameters.StopWatchButton.DefaultTextColor}" 
+                    GeometryColor="{Binding Parameters.StopWatchButton.DefaultGeometryColor}" 
+                    MouseEnterGeometryColor="{Binding Parameters.StopWatchButton.MouseEnterGeometryColor}"
+                    MouseEnterTextColor="{Binding Parameters.StopWatchButton.MouseEnterTextColor}"
+                    PressedGeometryColor="{Binding Parameters.StopWatchButton.PressedGeometryColor}"
+                    PressedTextColor="{Binding Parameters.StopWatchButton.PressedTextColor}">
+                    <local:GeometryButton.Geometry>
+                        <CombinedGeometry GeometryCombineMode="Union">
+                            <CombinedGeometry.Geometry1>
+                                <RectangleGeometry Rect="0,-50,50,15" RadiusX="5" RadiusY="5"/>
+                            </CombinedGeometry.Geometry1>
+                            <CombinedGeometry.Geometry2>
+                                <CombinedGeometry GeometryCombineMode="Xor">
+                                    <CombinedGeometry.Geometry1>
+                                        <EllipseGeometry Center="25,25" RadiusX="50" RadiusY="50"/>
+                                    </CombinedGeometry.Geometry1>
+                                    <CombinedGeometry.Geometry2>
+                                        <RectangleGeometry Rect="20,20,10,40" RadiusX="5" RadiusY="5">
+                                            <RectangleGeometry.Transform>
+                                                <RotateTransform CenterX="25" CenterY="25" Angle="180"/>
+                                            </RectangleGeometry.Transform>
+                                        </RectangleGeometry>
+                                    </CombinedGeometry.Geometry2>
+                                </CombinedGeometry>
+                            </CombinedGeometry.Geometry2>
+                        </CombinedGeometry>
+                    </local:GeometryButton.Geometry>
+                </local:GeometryButton>
+            </Grid>
+        </Viewbox>
     </Grid>
 </Window>
